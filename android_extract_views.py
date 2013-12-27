@@ -23,13 +23,13 @@ def extractViewCode(path):
 				views[viewId] = view
 				lookForId = False
 	declaration = ["View v; //The parent view of all other views. Unnecessary in Activities\n"]
-	findView = ["v = this.findViewById(android.R.id.content\n"]
+	findView = ["v = this.findViewById(android.R.id.content);\n"]
 	for view in views:
 		print "Found View: ", views[view], "\nwith id:", view
 		varName = ("".join([c.title() for c in (''.join(c if c.isalnum() else " " for c in view)).split(" ")]))
 		varName = varName[0].lower() + varName[1:]
 		declaration.append(views[view] + " " + varName + ";\n")
-		findView.append(varName + " = v.findViewById(R.id." + view + ");\n")
+		findView.append(varName + " = (" + views[view] + ")v.findViewById(R.id." + view + ");\n")
 	return declaration+ ["\n"] + findView
 
 
